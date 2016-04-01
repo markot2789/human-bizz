@@ -48,7 +48,11 @@ public class UserService {
 		  return fakeData;
 	  }
 	    
-	
+	/**
+	 * 
+	 * @param tl
+	 * TaskList will be saved in database
+	 */
 	@Transactional
 	public void addTaskList (TaskList tl) {
 		
@@ -57,7 +61,13 @@ public class UserService {
 	    em.persist(tl);
 	}
 	
-	
+	/**
+	 * 
+	 * @param pt
+	 * ProjectTask will be saved in database
+	 * 
+	 * 
+	 */
 	@Transactional
 	public void addProjectTask (ProjectTask pt ) {
 		

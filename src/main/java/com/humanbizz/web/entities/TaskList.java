@@ -10,12 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-
-
-
-
-
+/**
+ * 
+ * @author Aleksandar Bogicevic
+ *
+ */
 @Entity
 @Table(name="taskList")
 
@@ -29,7 +28,12 @@ public class TaskList {
 	
 	@OneToMany(mappedBy = "taskList", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private List<ProjectTask> projectTasks = new ArrayList<ProjectTask>();
-	
+	/**
+	 * 
+	 * @param projectTask
+	 * add projectTask method
+	 * @return
+	 */
 	public boolean addProjectTask (ProjectTask projectTask){
 		if(projectTask.getTaskList()!=null && projectTask.getTaskList()!=this)
 			return false;

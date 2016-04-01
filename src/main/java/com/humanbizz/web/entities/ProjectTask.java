@@ -1,4 +1,6 @@
+
 package com.humanbizz.web.entities;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,7 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+/**
+ * 
+ * @author Aleksandar Bogicevic
+ *
+ */
 @Entity
 @Table(name="projectTask")
 
