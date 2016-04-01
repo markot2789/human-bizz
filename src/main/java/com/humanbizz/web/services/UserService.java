@@ -6,9 +6,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.humanbizz.web.entities.ProjectTask;
+import com.humanbizz.web.entities.TaskList;
 import com.humanbizz.web.entities.User;
 
 @Service
@@ -44,4 +47,23 @@ public class UserService {
 		  
 		  return fakeData;
 	  }
+	    
+	
+	@Transactional
+	public void addTaskList (TaskList tl) {
+		
+		
+	     
+	    em.persist(tl);
+	}
+	
+	
+	@Transactional
+	public void addProjectTask (ProjectTask pt ) {
+		
+		
+	      em.persist(pt);
+	}
 }
+
+
