@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import com.humanbizz.web.entities.Ability;
+import com.humanbizz.web.entities.DailyTask;
 import com.humanbizz.web.entities.Project;
 import com.humanbizz.web.entities.Training;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.humanbizz.web.entities.ProjectTask;
+import com.humanbizz.web.entities.TaskCategory;
 import com.humanbizz.web.entities.TaskList;
 import com.humanbizz.web.entities.User;
 
@@ -124,6 +126,39 @@ public class UserService {
 
 		return true;
 	}
+	
+	
+	@Transactional
+	  public String getCategoryForTask(DailyTask dailyTask) {
+	    return dailyTask.getCategory().getName();
+	  }
+	  
+	  @Transactional
+	  public List<DailyTask> getDailyTasks(User user) {		  		  
+	    return user.getDailyTasks();
+	  }
+	  /**
+	   * 
+	   * @param dailyTask
+	   * add DailyTask to User
+	   */
+	  @Transactional
+	  public void  addDailyTask(DailyTask dailyTask){
+		  //rucno stavljeno
+		  User user = new User();
+		  user.setId(2);
+		  
+		  dailyTask.setUser(user);		  
+		  em.persist(dailyTask);		  		  
+	  }
+	  
+	  
+	 @Transactional
+	 public void addCategory(TaskCategory task_category){		
+		  task_category.setName("Predjasnji");	  
+		  em.persist(task_category);
+	 }
+	
 
 	/**
 	 * 
@@ -147,6 +182,9 @@ public class UserService {
 		em.persist(u);
 		addTraining(u, training);
 	}
+	
+	
+	
 }
 
 
