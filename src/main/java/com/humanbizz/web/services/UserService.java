@@ -1,6 +1,7 @@
 package com.humanbizz.web.services;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -130,6 +131,37 @@ public class UserService {
 		  em.persist(task_category);
 	 }
 	
+	 
+	 /**
+		 * 
+		 * @param user
+		 * @param ability
+		 */
+		public void deleteAbility(User user, Ability ability) {
+	        
+	        if (user.getAbilities() != null) {
+	        	em.getTransaction().begin();
+	        	em.remove(user.getAbilities());
+	            em.getTransaction().commit();
+	        }
+	    }
+		
+		@Transactional
+		public void addAbilityList(User user, List<Ability> listAbility) {
+			
+			for(Iterator<Ability> list = listAbility.iterator(); list.hasNext();){
+				
+				Ability ability = list.next();
+				
+				if (user.getAbilities().contains(ability)  &&  ability.equals(""))
+					break;
+		
+				ability.setUserObject(user);
+				em.persist(ability);
+
+			}
+			
+		}
 
 	/**
 	 * 
