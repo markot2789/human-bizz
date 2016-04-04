@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -45,6 +46,9 @@ public class User {
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private List<Training> trainings = new ArrayList<Training>();
+	
+	@ManyToOne(cascade = CascadeType.MERGE)
+	 private Project project;
 	
 	public int getId() {
 		return id;
@@ -93,4 +97,13 @@ public class User {
 	public void setTrainings(List<Training> trainings) {
 		this.trainings = trainings;
 	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+	
 }
