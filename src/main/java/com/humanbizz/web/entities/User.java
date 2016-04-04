@@ -1,9 +1,19 @@
 package com.humanbizz.web.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.humanbizz.web.entities.Training;;
 
 @Entity
 @Table (name="users")
@@ -19,7 +29,23 @@ public class User {
 	
 	private String name;
 
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@JoinTable(name = "user_ability", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "ability_id"))
+	private List<Ability> abilities = new ArrayList<Ability>();
 
+	public boolean addAbility(Ability ability) {
+		if (ability.getUserObject() != null && ability.getUserObject() != this)
+			return false;
+
+		ability.setUserObject(this);
+		abilities.add(ability);
+
+		return true;
+	}
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	private List<Training> trainings = new ArrayList<Training>();
+	
 	public int getId() {
 		return id;
 	}
@@ -50,5 +76,21 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public List<Training> getTrainings() {
+		return trainings;
+	}
+
+	public List<Ability> getAbilities() {
+		return abilities;
+	}
+
+	public void setAbilities(List<Ability> abilities) {
+		this.abilities = abilities;
+	}
+
+	public void setTrainings(List<Training> trainings) {
+		this.trainings = trainings;
 	}
 }
