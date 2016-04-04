@@ -23,36 +23,7 @@ public class UserService {
 
 	  @PersistenceContext
 	  private EntityManager em;
-	  
-
-	    
-	/**
-	 * 
-	 * @param tl
-	 * TaskList will be saved in database
-	 */
-	@Transactional
-	public void addTaskList (TaskList tl) {
-		
-		
-	     
-	    em.persist(tl);
-	}
-	
-	/**
-	 * 
-	 * @param pt
-	 * ProjectTask will be saved in database
-	 * 
-	 * 
-	 */
-	@Transactional
-	public void addProjectTask (ProjectTask pt ) {
-		
-		
-	      em.persist(pt);
-	}
-	
+	  	
 	@Transactional
 	// Since we've setup <tx:annotation-config> and transaction manager on
 	// spring-context.xml,

@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.humanbizz.web.entities.Phase;
 import com.humanbizz.web.entities.Project;
+import com.humanbizz.web.entities.ProjectTask;
+import com.humanbizz.web.entities.TaskList;
 import com.humanbizz.web.entities.User;
 
 @Service
@@ -89,4 +91,30 @@ public class ProjectService {
 	   return result;
 	  }
 	
+	  /**
+		 * 
+		 * @param tl
+		 * TaskList will be saved in database
+		 */
+		@Transactional
+		public void addTaskList (TaskList tl) {
+			
+			
+		     
+		    em.persist(tl);
+		}
+		
+		/**
+		 * 
+		 * @param pt
+		 * ProjectTask will be saved in database
+		 * 
+		 * 
+		 */
+		@Transactional
+		public void addProjectTask (ProjectTask pt ) {
+			
+			
+		      em.persist(pt);
+		}
 }

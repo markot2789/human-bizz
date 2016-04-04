@@ -29,7 +29,7 @@ public class IndexController {
 	    
 	    TaskList taskList = new TaskList();
 	    taskList.setName("Bizz");
-	    userService.addTaskList(taskList);
+	    projectService.addTaskList(taskList);
 	    return "home";
 	  }
 	  
