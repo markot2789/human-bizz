@@ -1,6 +1,7 @@
 package com.humanbizz.web.services;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.humanbizz.web.entities.ProjectTask;
 import com.humanbizz.web.entities.TaskList;
 import com.humanbizz.web.entities.User;
+
+
 
 @Service
 public class UserService {
@@ -84,10 +87,9 @@ public class UserService {
 	 * @return list of abilities for user with user_id
 	 */
 	@Transactional
-	public List<Ability> getAbilitiesForUser(Integer user_id) {
+	public List<Ability> getAbilities(User user) {
 		List<Ability> abilities = em.createQuery("SELECT a FROM Ability a where user_object=:user_id", Ability.class)
-				.setParameter("user_id", user_id).getResultList();
-
+				.setParameter("user_id", user.getId()).getResultList();
 		return abilities;
 	}
 
@@ -123,6 +125,38 @@ public class UserService {
 		em.persist(ability);
 
 		return true;
+	}
+	
+	
+	/**
+	 * 
+	 * @param user
+	 * @param ability
+	 */
+	public void deleteAbility(User user, Ability ability) {
+        
+        if (user.getAbilities() != null) {
+        	em.getTransaction().begin();
+        	em.remove(user.getAbilities());
+            em.getTransaction().commit();
+        }
+    }
+	
+	@Transactional
+	public void addAbilityList(User user, List<Ability> listAbility) {
+		
+		for(Iterator<Ability> list = listAbility.iterator(); list.hasNext();){
+			
+			Ability ability = list.next();
+			
+			if (user.getAbilities().contains(ability)  &&  ability.equals(""))
+				break;
+	
+			ability.setUserObject(user);
+			em.persist(ability);
+
+		}
+		
 	}
 
 	/**
