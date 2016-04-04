@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import com.humanbizz.web.entities.Ability;
+import com.humanbizz.web.entities.Project;
 import com.humanbizz.web.entities.Training;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -131,6 +132,9 @@ public class UserService {
 	@Transactional
 	public void add(User u) {
 
+		Project project = new Project();
+		project.setName("nas prvi projekat");
+		  
 		Ability ability = new Ability();
 		ability.setName("SQL");
 
