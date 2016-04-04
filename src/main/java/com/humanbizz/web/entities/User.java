@@ -50,6 +50,19 @@ public class User {
 	@ManyToOne(cascade = CascadeType.MERGE)
 	 private Project project;
 	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	private List<DailyTask> dailyTasks = new ArrayList<DailyTask>();
+	
+	public boolean addDailyTasks (DailyTask dailyTask){
+		if(dailyTask.getUser()!=null && dailyTask.getUser()!=this)
+			return false;
+		
+		dailyTask.setUser(this);
+		dailyTasks.add(dailyTask);
+		
+		return true;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -105,5 +118,15 @@ public class User {
 	public void setProject(Project project) {
 		this.project = project;
 	}
+
+	public List<DailyTask> getDailyTasks() {
+		return dailyTasks;
+	}
+
+	public void setDailyTasks(List<DailyTask> dailyTasks) {
+		this.dailyTasks = dailyTasks;
+	}
+	
+	
 	
 }
