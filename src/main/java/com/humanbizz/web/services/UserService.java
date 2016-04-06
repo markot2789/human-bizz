@@ -19,6 +19,8 @@ import com.humanbizz.web.entities.TaskCategory;
 import com.humanbizz.web.entities.TaskList;
 import com.humanbizz.web.entities.User;
 
+
+
 @Service
 public class UserService {
 
@@ -61,8 +63,10 @@ public class UserService {
 	 */
 	@Transactional
 	public List<Ability> getAbilities(User user) {
+
 		List<Ability> abilities = em
 				.createQuery("SELECT a FROM User u join u.abilities a where u.id=:user_id", Ability.class)
+
 				.setParameter("user_id", user.getId()).getResultList();
 		return abilities;
 	}
@@ -164,6 +168,8 @@ public class UserService {
 
 		return true;
 	}
+	
+
 
 	/**
 	 * 
