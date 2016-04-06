@@ -34,10 +34,7 @@ public class User {
 	private String name;
 
 	@ManyToMany
-	@JoinTable(name = "user_ability", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "ability_id"),
-	uniqueConstraints =
-		    @UniqueConstraint(name = "UK_client_instruments_traded_client_id_instrument_traded_id",
-		    columnNames = {"ability_id", "ability_id"}))
+	@JoinTable(name = "user_ability", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "ability_id"))
 		    
 	private List<Ability> abilities = new ArrayList<Ability>();
 
