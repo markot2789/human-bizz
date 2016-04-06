@@ -13,7 +13,7 @@
   </c:forEach>
    
   <h1>Add New</h1>
-  <form method="post" action="addPerson">
+  <form method="post" action="addUser">
   Name: <input type="text" name="name"/>
   <button>Add</button>
   </form>

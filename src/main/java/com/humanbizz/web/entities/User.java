@@ -6,13 +6,16 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.humanbizz.web.entities.Training;;
 
@@ -30,17 +33,17 @@ public class User {
 	
 	private String name;
 
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@ManyToMany
 	@JoinTable(name = "user_ability", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "ability_id"))
+		    
 	private List<Ability> abilities = new ArrayList<Ability>();
 
 	public boolean addAbility(Ability ability) {
-		if (ability.getUserObject() != null && ability.getUserObject() != this)
+		if (this.getAbilities().contains(ability))
 			return false;
-
-		ability.setUserObject(this);
-		abilities.add(ability);
-
+		
+		this.abilities.add(ability);
+		
 		return true;
 	}
 
@@ -49,6 +52,19 @@ public class User {
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	 private Project project;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	private List<DailyTask> dailyTasks = new ArrayList<DailyTask>();
+	
+	public boolean addDailyTasks (DailyTask dailyTask){
+		if(dailyTask.getUser()!=null && dailyTask.getUser()!=this)
+			return false;
+		
+		dailyTask.setUser(this);
+		dailyTasks.add(dailyTask);
+		
+		return true;
+	}
 	
 	public int getId() {
 		return id;
@@ -105,5 +121,15 @@ public class User {
 	public void setProject(Project project) {
 		this.project = project;
 	}
+
+	public List<DailyTask> getDailyTasks() {
+		return dailyTasks;
+	}
+
+	public void setDailyTasks(List<DailyTask> dailyTasks) {
+		this.dailyTasks = dailyTasks;
+	}
+	
+	
 	
 }

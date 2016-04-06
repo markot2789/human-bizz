@@ -1,8 +1,12 @@
 package com.humanbizz.web.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -22,17 +26,9 @@ public class Ability {
 	private String name;
 
 	private int rate;
-
-	@ManyToOne
-	private User userObject;
-
-	public User getUserObject() {
-		return userObject;
-	}
-
-	public void setUserObject(User userObject) {
-		this.userObject = userObject;
-	}
+	
+	@ManyToMany(mappedBy = "abilities")
+	private List<User> users = new ArrayList<User>();
 
 	public int getId() {
 		return id;
@@ -60,7 +56,8 @@ public class Ability {
 
 	@Override
 	public String toString() {
-		return "Ability [id=" + id + ", name=" + name + ", rate=" + rate + ", userObject=" + userObject + "]";
+		return "Ability [id=" + id + ", name=" + name + ", rate=" + rate + "]";
 	}
 
+	
 }
