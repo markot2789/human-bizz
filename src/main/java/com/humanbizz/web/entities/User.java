@@ -6,13 +6,16 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.humanbizz.web.entities.Training;;
 
@@ -30,17 +33,20 @@ public class User {
 	
 	private String name;
 
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-	@JoinTable(name = "user_ability", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "ability_id"))
+	@ManyToMany
+	@JoinTable(name = "user_ability", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "ability_id"),
+	uniqueConstraints =
+		    @UniqueConstraint(name = "UK_client_instruments_traded_client_id_instrument_traded_id",
+		    columnNames = {"ability_id", "ability_id"}))
+		    
 	private List<Ability> abilities = new ArrayList<Ability>();
 
 	public boolean addAbility(Ability ability) {
-		if (ability.getUserObject() != null && ability.getUserObject() != this)
+		if (this.getAbilities().contains(ability))
 			return false;
-
-		ability.setUserObject(this);
-		abilities.add(ability);
-
+		
+		this.abilities.add(ability);
+		
 		return true;
 	}
 
